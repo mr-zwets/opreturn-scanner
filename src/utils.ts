@@ -1,37 +1,26 @@
 import { ChaingraphClient, graphql } from "chaingraph-ts"
 
-const chaingraphUrl = "https://gql.chaingraph.pat.mn/v1/graphql"
+const chaingraphUrl = "https://demo.chaingraph.cash/v1/graphql"
 
 const chaingraphClient = new ChaingraphClient(chaingraphUrl)
 
-export async function fetchOpreturnMarkers(markerUtftf8Hex:string){
+export async function fetchOpreturnMarkers(opreturnMarker:string){
   const queryReqOpreturnMarker = graphql(`query opreturnMarker (
-    $marker: String
+    $opreturnMarker: String
   ){
-    output(
-      where: {
-        locking_bytecode_pattern: {
-          _eq: $marker
-        }
-      }
+    search_output_prefix(
+      args: { locking_bytecode_prefix_hex: $opreturnMarker }
     ) {
       transaction_hash
     }
   }`);
   
-  const variables = {
-    marker: markerUtftf8Hex
-  }
-
-  console.log(markerUtftf8Hex)
+  const resultQueryOpreturnMarker = await chaingraphClient.query(queryReqOpreturnMarker, {opreturnMarker})
   
-  // 5. Use your custom query through the 'chaingraphClient'
-  const resultQueryOpreturnMarker = await chaingraphClient.query(queryReqOpreturnMarker, variables)
-  
-  // 6. Check and output the result
   if (!resultQueryOpreturnMarker.data) {
     throw new Error("No data returned from Chaingraph query");
   }
-  const listTxIds = resultQueryOpreturnMarker.data.output.map((output: any) => output.transaction_hash.slice(2));
+  console.log(resultQueryOpreturnMarker)
+  const listTxIds = resultQueryOpreturnMarker.data.search_output_prefix.map((output: any) => output.transaction_hash.slice(2));
   return listTxIds
 }
