@@ -86,13 +86,16 @@ async function scanOpreturnMarker() {
 
     <div style="margin-top: 20px;">
       <h2>List of existing markers:</h2>
-      <div>Markers are short UTF8 text strings</div>
+      <div>Markers are short UTF-8 (case-sensitive) text strings </div>
       <div>Lokad-Ids have a fixed 4-byte encoding</div>
       <h3 style="text-decoration: underline; margin-top: 5px;">Lokad-Ids</h3>
       <div>Bitcoin-Cash-Metadata-Registries: <code>BCMR</code></div>
       <div>TapSwap: <code>MPSW</code></div>
       <div>BCH Pump: <code>PUMP</code></div>
       <div>Interplanetary BitcoinCash: <code>IPBC</code></div>
+      <div>Hodl Plugin: <code>hodl</code></div>
+      <div>Unspent Phi: <code>utxo</code></div>
+      <div>Licho's protocols: <code>>sh</code></div>
       <div>SLP-Tokens: <code>SLP</code> <small>(scan currently broken, too many txs)</small></div>
 
       <h3 style="text-decoration: underline; margin-top: 5px;">Custom Markers</h3>
