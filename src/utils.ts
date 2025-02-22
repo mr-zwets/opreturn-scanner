@@ -1,6 +1,6 @@
 import { ChaingraphClient, graphql } from "chaingraph-ts"
 
-const chaingraphUrl = "https://demo.chaingraph.cash/v1/graphql"
+const chaingraphUrl = "https://gql.chaingraph.pat.mn/v1/graphql"
 
 const chaingraphClient = new ChaingraphClient(chaingraphUrl)
 
@@ -10,11 +10,19 @@ export async function fetchOpreturnMarkers(opreturnMarker:string){
   ){
     search_output_prefix(
       args: { locking_bytecode_prefix_hex: $opreturnMarker }
+      where: {
+        transaction: {
+          block_inclusions: {
+            block: { accepted_by: { node: { name: { _regex: "mainnet" } } } }
+          }
+        }
+      }
     ) {
       transaction_hash
     }
   }`);
   
+  // TODO: add timeout to requests
   const resultQueryOpreturnMarker = await chaingraphClient.query(queryReqOpreturnMarker, {opreturnMarker})
   
   if (!resultQueryOpreturnMarker.data) {
