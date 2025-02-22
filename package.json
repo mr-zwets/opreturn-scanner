@@ -13,7 +13,6 @@
   "dependencies": {
     "@bitauth/libauth": "^3.0.0",
     "chaingraph-ts": "^0.2.3",
-    "vite-plugin-top-level-await": "^1.5.0",
     "vue": "^3.5.13"
   },
   "devDependencies": {
